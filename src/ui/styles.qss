@@ -1,0 +1,81 @@
+/* 
+ * Kmd Application Styles (Qt Stylesheet)
+ * Modern dark theme with smooth animations
+ */
+
+/* Main Window */
+QWidget#SpotlightWindow {
+    background-color: rgba(30, 30, 30, 0.95);
+    border: 1px solid #333;
+    border-radius: 10px;
+}
+
+/* Input Field */
+QLineEdit {
+    background-color: transparent;
+    border: none;
+    color: #00ff00;
+    font-family: "Consolas", "Monaco", monospace;
+    font-size: 16px;
+    padding: 10px 15px;
+}
+
+QLineEdit::placeholder {
+    color: #666;
+}
+
+QLineEdit:focus {
+    color: #00ff00;
+}
+
+/* Close Button */
+QPushButton#CloseButton {
+    background-color: transparent;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    padding: 5px 10px;
+}
+
+QPushButton#CloseButton:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+QPushButton#CloseButton:pressed {
+    background-color: #444;
+}
+
+/* Settings Window (Future) */
+QWidget#SettingsWindow {
+    background-color: #1e1e1e;
+    color: #fff;
+}
+
+QLabel {
+    color: #ccc;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+QComboBox {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 5px;
+    color: #fff;
+}
+
+QComboBox:hover {
+    border: 1px solid #666;
+}
+
+QComboBox::drop-down {
+    border: none;
+}
+
+QComboBox::down-arrow {
+    image: none;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #fff;
+}

@@ -1,0 +1,5 @@
+# PyInstaller build spec for Kmd
+pyinstaller --noconsole --onefile --name="Kmd" --icon=assets/icon.ico src/main.py
+
+# Nuitka build command (optional, for advanced optimization)
+# python -m nuitka --onefile --windows-disable-console --enable-plugin=pyside6 src/main.py

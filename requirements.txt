@@ -1,0 +1,20 @@
+# Kmd - AI Command Assistant
+# Core Dependencies
+
+# UI Framework (Qt for Python)
+PySide6>=6.6.0
+
+# System Integration
+keyboard>=0.13.5          # Global hotkey support
+pystray>=0.19.5           # System tray icon
+Pillow>=10.0.0           # Image handling for tray icon
+
+# Clipboard Operations
+pyperclip>=1.8.2         # Cross-platform clipboard
+
+# HTTP Client for AI APIs
+requests>=2.31.0         # API calls to Ollama, OpenAI, Gemini
+
+# Optional: For future enhancements
+# pydantic>=2.0.0        # Data validation
+# pytest>=7.4.0          # Testing framework
