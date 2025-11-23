@@ -108,37 +108,46 @@ Configuration is stored in `~/.Kmd/config.json`:
 3. Add your API key: `"gemini": "YOUR_KEY"`
 
 
+
 ## 🎮 Usage Examples
 
-| Query | Generated Command |
-|-------|------------------|
-| "list all files" | `ls -la` |
-| "find python files" | `find . -name "*.py"` |
-| "disk usage" | `df -h` |
-| "kill process on port 3000" | `lsof -ti:3000 | xargs kill -9` |
-| "git status" | `git status` |
+| Query                        | Generated Command                |
+|------------------------------|----------------------------------|
+| list all files               | `ls -la`                         |
+| find python files            | `find . -name "*.py"`            |
+| disk usage                   | `df -h`                          |
+| kill process on port 3000    | `lsof -ti:3000 \| xargs kill -9` |
+| git status                   | `git status`                     |
 
 ## 🐛 Troubleshooting
 
+
 ### "Ollama not running" error
+
 ```bash
 # Start Ollama in a separate terminal
 ollama serve
 ```
 
+
 ### Hotkey not working
+
 - The app requires proper permissions for global hotkeys
 - On Linux, you may need to run with appropriate permissions
 - Check if another app is using `Ctrl+Shift+Space`
 
+
 ### PySide6 / Qt display issues in WSL
+
 ```bash
 # Install X server for Windows (e.g., VcXsrv)
 # Set DISPLAY environment variable
 export DISPLAY=:0
 ```
 
+
 ### Dependencies installation failed
+
 ```bash
 # Make sure pip is up to date
 pip install --upgrade pip
@@ -151,7 +160,9 @@ pip install pystray
 
 ## 🔧 Development
 
+
 ### Running Tests
+
 ```bash
 # Test configuration manager
 python src/config.py
@@ -168,7 +179,9 @@ python src/core/hotkey_listener.py
 
 ### Adding a New AI Provider
 
+
 1. Create a new class in `src/services/ai_engine.py`:
+
 ```python
 class ClaudeProvider(AIProvider):
     def generate_command(self, query: str) -> str:
@@ -177,6 +190,7 @@ class ClaudeProvider(AIProvider):
 ```
 
 2. Add to the factory function:
+
 ```python
 def get_provider() -> AIProvider:
     providers = {
@@ -208,4 +222,7 @@ Contributions welcome! This is a personal project but feel free to fork and cust
 
 ---
 
-**Made with ❤️ for developers who love the command line**
+
+---
+
+Made with ❤️ for developers who love the command line
