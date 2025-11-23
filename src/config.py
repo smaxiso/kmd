@@ -25,7 +25,8 @@ DEFAULT_CONFIG = {
     "ollama_url": "http://localhost:11434",
     "model": "llama3.2",
     "hotkey": "ctrl+shift+space",
-    "theme": "dark"
+    "theme": "dark",
+    "enable_tray": False
 }
 
 

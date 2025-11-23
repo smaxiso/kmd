@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from src.ui.spotlight_window import SpotlightWindow
 from src.core.hotkey_listener import HotkeyListener
 from src.core.system_tray import SystemTray
-from src.config import cfg
+from src.config import cfg, CONFIG_FILE
 
 
 class KmdApplication:
@@ -89,19 +89,24 @@ class KmdApplication:
         print(f"Hotkey listener started: {cfg.get('hotkey')}")
     
     def start_system_tray(self):
-        """Start system tray icon in background thread"""
-        self.system_tray = SystemTray(
-            show_callback=self.show_window,
-            quit_callback=self.quit_application
-        )
-        
-        # Run in daemon thread
-        tray_thread = threading.Thread(
-            target=self.system_tray.run,
-            daemon=True
-        )
-        tray_thread.start()
-        print("System tray started")
+        """Start system tray icon in background thread if enabled"""
+        if not cfg.get('enable_tray', False):
+            print("System tray is disabled in config.")
+            return
+        try:
+            self.system_tray = SystemTray(
+                show_callback=self.show_window,
+                quit_callback=self.quit_application
+            )
+            # Run in daemon thread
+            tray_thread = threading.Thread(
+                target=self.system_tray.run,
+                daemon=True
+            )
+            tray_thread.start()
+            print("System tray started")
+        except Exception as e:
+            print(f"System tray failed to start: {e}")
     
     def run(self):
         """Start the application"""
@@ -111,7 +116,7 @@ class KmdApplication:
         print(f"Provider: {cfg.get('provider')}")
         print(f"Model: {cfg.get('model')}")
         print(f"Hotkey: {cfg.get('hotkey')}")
-        print(f"Config: {cfg.CONFIG_FILE}")
+        print(f"Config: {CONFIG_FILE}")
         print("=" * 50)
         
         try:

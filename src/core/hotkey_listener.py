@@ -5,7 +5,7 @@ Monitors system-wide keyboard events to trigger the spotlight window.
 Runs in a background daemon thread.
 """
 
-import keyboard
+from pynput import keyboard
 import sys
 from pathlib import Path
 
@@ -25,40 +25,46 @@ class HotkeyListener:
     def __init__(self, toggle_callback):
         """
         Initialize hotkey listener
-        
         Args:
             toggle_callback: Function to call when hotkey is pressed
         """
         self.toggle_callback = toggle_callback
         self.hotkey = cfg.get('hotkey', 'ctrl+shift+space')
-        self._registered = False
-    
+        self.listener = None
+        self.running = False
+
     def start(self):
-        """Start listening for hotkey"""
-        try:
-            keyboard.add_hotkey(self.hotkey, self.toggle_callback)
-            self._registered = True
-            print(f"Hotkey registered: {self.hotkey}")
-            
-            # Block forever, keeping the listener active
-            keyboard.wait()
-            
-        except ImportError:
-            print("Error: 'keyboard' module requires admin/root privileges")
-            raise
-        except Exception as e:
-            print(f"Error registering hotkey: {e}")
-            raise
-    
+        """Start listening for hotkey using pynput (rootless)"""
+        self.running = True
+        key_map = {
+            'ctrl': keyboard.Key.ctrl,
+            'shift': keyboard.Key.shift,
+            'alt': keyboard.Key.alt,
+            'space': keyboard.Key.space
+        }
+        keys = self.hotkey.lower().split('+')
+        combo = set(key_map[k] for k in keys if k in key_map)
+        pressed = set()
+
+        def on_press(key):
+            if key in combo:
+                pressed.add(key)
+                if pressed == combo:
+                    self.toggle_callback()
+
+        def on_release(key):
+            if key in pressed:
+                pressed.remove(key)
+
+        self.listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+        self.listener.start()
+        self.listener.join()
+
     def stop(self):
         """Stop listening for hotkey"""
-        if self._registered:
-            try:
-                keyboard.remove_hotkey(self.hotkey)
-                self._registered = False
-                print("Hotkey unregistered")
-            except Exception as e:
-                print(f"Error unregistering hotkey: {e}")
+        self.running = False
+        if self.listener:
+            self.listener.stop()
 
 
 if __name__ == "__main__":
